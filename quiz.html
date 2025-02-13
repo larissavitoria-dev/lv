@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Interativo</title>
+  <link rel="stylesheet" href="css/style.css">
+  
+  <style>
+
+  
+  
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #b841ae;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    
+    
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🃏Quiz Interativo🃏</h1>
+    <div id="quiz">
+      <div id="question"></div>
+      <div id="choices"></div>
+      <button id="submit" class="btn">Enviar Resposta</button>
+    </div>
+
+    <div id="results">
+      <p id="score"></p>
+      <button id="restart" class="btn">Reiniciar Quiz</button>
+      <h2>✨Parabéns você acabou o quiz!✨</h2>
+      <a href="portifolio.html" class="voltar">Voltar</a>
+    </div>
+  </div>
+  <script src="js/script.js"></script>
+  <script>
+    let currentQuestion = 0;
+    let score = 0;
+    let selectedChoice = null;
+
+    const questions = [
+      {
+        question: "Qual é a capital do Brasil?",
+        choices: ["São Paulo", "Brasília", "Rio de Janeiro", "Salvador"],
+        correct: 1
+      },
+      {
+        question: "Qual é o maior estado do Brasil em área?",
+        choices: ["Amazonas", "Bahia", "Mato Grosso", "Minas Gerais"],
+        correct: 0
+      },
+      {
+        question: "Em que ano o Brasil se tornou independente?",
+        choices: ["1500", "1822", "1889", "1910"],
+        correct: 1
+      },
+      {
+        question: "Qual é o maior rio do Brasil?",
+        choices: ["São Francisco", "Paraná", "Amazonas", "Iguaçu"],
+        correct: 2
+      },
+      {
+        question: "Quem foi o primeiro presidente do Brasil?",
+        choices: ["Getúlio Vargas", "Juscelino Kubitschek", "Deodoro da Fonseca", "Dom Pedro II"],
+        correct: 2
+      }
+    ];
+
+    function displayQuestion() {
+    const questionEl = document.getElementById('question');
+    const choicesEl = document.getElementById('choices');
+    const current = questions[currentQuestion];
+
+    questionEl.textContent = `${currentQuestion + 1}. ${current.question}`;
+    choicesEl.innerHTML = '';
+
+    current.choices.forEach((choice, index) => {
+      const div = document.createElement('div');
+      div.className = 'choice';
+      div.textContent = choice;
+      div.onclick = () => selectChoice(index, div);
+      choicesEl.appendChild(div);
+    });
+  }
+
+  function selectChoice(index, element) {
+    const choices = document.getElementsByClassName('choice');
+    for (let choice of choices) {
+      choice.classList.remove('selected');
+    }
+    element.classList.add('selected');
+    selectedChoice = index;
+  }
+
+  function showResults() {
+    document.getElementById('quiz').style.display = 'none';
+    document.getElementById('results').style.display = 'block';
+    document.getElementById('score').textContent = 
+      `Você acertou ${score} de ${questions.length} perguntas!`;
+  }
+
+  document.getElementById('submit').addEventListener('click', () => {
+    if (selectedChoice === null) {
+      alert('Por favor, selecione uma resposta!');
+      return;
+    }
+
+    if (selectedChoice === questions[currentQuestion].correct) {
+      score++;
+    }
+
+    selectedChoice = null;
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+      displayQuestion();
+    } else {
+      showResults();
+    }
+  });
+
+  document.getElementById('restart').addEventListener('click', () => {
+    currentQuestion = 0;
+    score = 0;
+    selectedChoice = null;
+    document.getElementById('quiz').style.display = 'block';
+    document.getElementById('results').style.display = 'none';
+    displayQuestion();
+  });
+
+  displayQuestion();
+
+</script>
+
+</body>
+
+</html>
+

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    
+
+</head>
+<body>
+
+    <h1>✨𝑬𝒏𝒕𝒓𝒆 𝒆𝒎 𝑪𝒐𝒏𝒕𝒂𝒕𝒐✨</h1>
+
+    <form id="contact-form" onsubmit="return validateForm()">
+        <input type="text" id="name" placeholder="Nome" required>
+        <input type="email" id="email" placeholder="E-mail" required>
+        <input type="text" id="whatsapp" placeholder="WhatsApp" required>
+        <textarea id="message" placeholder="Mensagem" required></textarea>
+        <button type="submit">Enviar</button>
+        <p id="form-message"></p>
+    </form>
+    <a href="portifolio.html" class="voltar">Voltar</a>
+
+    <p class="message" id="form-message"></p>
+
+    <div class="social-links">
+        <p>Conecte-se comigo:</p>
+        <a href="https://www.instagram.com/larissaxr.7?igsh=dmlobjE2YWtsYzQ=" target="_blank">Instagram</a>
+        <a href="https://wa.me/qr/CGVOWG6AQ7WAC1" target="_blank">WhatsApp</a>
+    </div>
+
+    <script>
+        function validateForm() {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const whatsapp = document.getElementById("whatsapp").value;
+    const message = document.getElementById("message").value;
+    const formMessage = document.getElementById("form-message");
+
+    if (!name || !email || !whatsapp || !message) {
+        formMessage.textContent = "Por favor, preencha todos os campos obrigatórios.";
+        formMessage.classList.add("error");
+        formMessage.classList.remove("success");
+        return false;
+    }
+
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailPattern.test(email)) {
+        formMessage.textContent = "Por favor, insira um e-mail válido.";
+        formMessage.classList.add("error");
+        formMessage.classList.remove("success");
+        return false;
+    }
+
+    const whatsappPattern = /^[0-9]{10,11}$/;
+    if (!whatsappPattern.test(whatsapp)) {
+        formMessage.textContent = "Por favor, insira um número de WhatsApp válido (10 ou 11 dígitos).";
+        formMessage.classList.add("error");
+        formMessage.classList.remove("success");
+        return false;
+    }
+
+    formMessage.textContent = "Mensagem enviada com sucesso!";
+    formMessage.classList.add("success");
+    formMessage.classList.remove("error");
+
+    document.getElementById("contact-form").reset();
+
+    return false;
+}
+    </script>
+
+</body>
+</html>
